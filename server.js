@@ -31,11 +31,11 @@ app.get("/patients/:phone", (req, res)=>{
                     message: "No patient Found"
                       })
             }else {
-               // res.status(200).json(Patient)
-                //console.log("efWF",patien)
+                //res.status(200).json(Patient)
+                //console.log("efWF",patient)
                 Appointment.find({pt_id: patient[0].pt_id})
                 .then(appointment=>{
-                    console.log("addf",appointment)
+                    //console.log("addf",appointment)
                     if(!appointment){
                         res.status(200).json({
                             message: "not found"
