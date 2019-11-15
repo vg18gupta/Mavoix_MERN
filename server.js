@@ -18,24 +18,24 @@ app.use(bodyParser.json())
 //mongoose.connect('localhost:27017/patient');
 
 
-app.get("/patients/:phone", (req, res)=>{
+app.get("/appointment/:phone", (req, res)=>{
     // console.log("hit")
     // res.json("hello");
     let{ phone } = req.params
     console.log(phone);
     Patient.find({mob_number: phone})
         .then(patient => {
-           // console.log("dsds",patient)
+           console.log("dsds",patient)
             if(!patient){
                 res.status(200).json({
                     message: "No patient Found"
                       })
             }else {
                 //res.status(200).json(Patient)
-                //console.log("efWF",patient)
+                console.log("efWF",patient[0].pt_id)
                 Appointment.find({pt_id: patient[0].pt_id})
                 .then(appointment=>{
-                    //console.log("addf",appointment)
+                    console.log("addf",appointment)
                     if(!appointment){
                         res.status(200).json({
                             message: "not found"
@@ -45,6 +45,27 @@ app.get("/patients/:phone", (req, res)=>{
                         res.status(200).json(appointment);
                     }
                 })     
+            }
+            })
+        .catch(error => serverError(res, error))
+});
+
+app.get("/patient/:phone", (req, res)=>{
+    // console.log("hit")
+    // res.json("hello");
+    let{ phone } = req.params
+    console.log(phone);
+    Patient.find({mob_number: phone})
+        .then(patient => {
+          // console.log("abcd",patient)
+            if(!patient){
+                res.status(200).json({
+                    message: "No patient Found"
+                      })
+            }else {
+                res.status(200).json(patient)
+                console.log("efWF",patient)
+               
             }
             })
         .catch(error => serverError(res, error))
